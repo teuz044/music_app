@@ -36,9 +36,7 @@ class _RepertorioPageState extends State<RepertorioPage> {
             break;
           case RepertorioStateStatus.error:
             Future.delayed(Duration.zero);
-            // showError(
-            //   controller.errorMessage ?? 'Erro ao buscar dados dos Alunos!',
-            // );
+          
             break;
           case RepertorioStateStatus.updateScreen:
             EasyLoading.dismiss();

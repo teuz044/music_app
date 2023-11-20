@@ -39,9 +39,7 @@ class _AdicionarMusicaPageState extends State<AdicionarMusicaPage> {
             break;
           case AdicionarMusicasStateStatus.error:
             Future.delayed(Duration.zero);
-            // showError(
-            //   controller.errorMessage ?? 'Erro ao buscar dados dos Alunos!',
-            // );
+           
             break;
           case AdicionarMusicasStateStatus.updateScreen:
             EasyLoading.dismiss();

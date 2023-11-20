@@ -39,9 +39,7 @@ class _CriarNovaMusicaPageState extends State<CriarNovaMusicaPage> {
             break;
           case CriarMusicaStateStatus.error:
             Future.delayed(Duration.zero);
-            // showError(
-            //   controller.errorMessage ?? 'Erro ao buscar dados dos Alunos!',
-            // );
+            
             break;
           case CriarMusicaStateStatus.updateScreen:
             EasyLoading.dismiss();

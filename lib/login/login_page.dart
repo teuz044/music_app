@@ -37,9 +37,8 @@ class _LoginPageState extends State<LoginPage> {
           backgroundColor: const Color(0xFF1C2120),
           body: ListView(
             children: [
-              Container(
+              SizedBox(
                 height: MediaQuery.of(context).size.height * 0.40,
-                color: const Color(0xFF1C2120),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

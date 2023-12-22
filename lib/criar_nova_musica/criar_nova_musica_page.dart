@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -5,9 +7,9 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:music_app/core/ui/custom_text_field.dart';
 import 'package:music_app/criar_nova_musica/controllers/criar_nova_musica_controller.dart';
-import '../adicionar_musicas/controllers/adicionar_musicas_controller.dart';
 import '../core/ui/class_estilos_texto.dart';
 import '../repertorios/controllers/repertorios_controller.dart';
+import '../../core/session/session.dart' as session;
 
 class CriarNovaMusicaPage extends StatefulWidget {
   const CriarNovaMusicaPage({super.key});
@@ -19,18 +21,18 @@ class CriarNovaMusicaPage extends StatefulWidget {
 class _CriarNovaMusicaPageState extends State<CriarNovaMusicaPage> {
   final controller = Modular.get<CriarNovaMusicaController>();
   final repertorioController = Modular.get<RepertoriosController>();
-  final adicionarMusicaController = Modular.get<AdicionarMusicasController>();
   late final ReactionDisposer statusReactionDisposer;
 
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      statusReactionDisposer = reaction((_) => controller.status, (status) {
+      statusReactionDisposer = reaction((_) => controller.status, (status) async{
         switch (status) {
           case CriarMusicaStateStatus.initial:
            Future.delayed(Duration.zero);
             break;
           case CriarMusicaStateStatus.loading:
+             await Future.delayed(Duration(milliseconds: 100));
              EasyLoading.show(); 
             break;
           case CriarMusicaStateStatus.loaded:
@@ -71,7 +73,7 @@ class _CriarNovaMusicaPageState extends State<CriarNovaMusicaPage> {
                 children: [
                   IconButton(
                       onPressed: () {
-                        Modular.to.pop();
+                        Modular.to.pop(context);
                       },
                       icon: const Icon(
                         Icons.arrow_back,
@@ -97,7 +99,7 @@ class _CriarNovaMusicaPageState extends State<CriarNovaMusicaPage> {
               ),
             ),
             const Divider(),
-            Text('Grupo: ${repertorioController.nomeGrupoMusicalEC.text}', style: ClassEstilosTextos.pretoSize18w400Montserrat,),
+            Text('Grupo: ${repertorioController.nomeRepertorioEC.text}', style: ClassEstilosTextos.pretoSize18w400Montserrat,),
             const SizedBox(
               height: 16,
             ),
@@ -127,8 +129,7 @@ class _CriarNovaMusicaPageState extends State<CriarNovaMusicaPage> {
             ElevatedButton.icon(
               onPressed: () async {
                 await controller.adicionarMusica(int.tryParse(repertorioController.idGrupoMusicalEC.text) ?? 0);
-                await adicionarMusicaController.getMusicasPorId(1);
-                Modular.to.pop();
+                Modular.to.pop(context);
               },
               style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
               icon: const Icon(

@@ -43,7 +43,7 @@ abstract class LoginControllerBase with Store {
       final String? usuarioNome = loginData?['nmUser'];
       final int? statusCode = loginData?['statusCode'];
       _carregando = true;
-
+      await Future.delayed(Duration.zero);
       if (statusCode == 200) {
         await prefs.setString('token', token ?? '');
         await prefs.setInt('cdUser', usuarioID ?? 0);

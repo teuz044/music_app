@@ -1,5 +1,7 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:dio/dio.dart';
-import 'package:music_app/repertorios/models/grupos_musica_model.dart';
+import 'package:music_app/repertorios/models/repertorio_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/dio/dio_client.dart';
@@ -7,16 +9,16 @@ import '../../core/dio/dio_client.dart';
 class RepertoriosRepository {
   final DioClient dio = DioClient();
 
-  Future<void> setGruposMusicais(String nomeGrupo, int cdUser) async {
+  Future<void> setRepertorio(String nomeRepertorio, int cdUser) async {
     try {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('token');
       print(token);
       final response = dio.post(
-        'v1/music/genders/post',
+        '/v1/music/repertoire',
         data: {
-          'nmGender': nomeGrupo,
-          'cdUser': cdUser
+          'nmRepertoire': nomeRepertorio,
+          'cdUser': cdUser,
         },
         options: Options(
           headers: {
@@ -26,17 +28,17 @@ class RepertoriosRepository {
       );
     } catch (e) {
       print(e.toString());
-      throw Exception('Erro ao cadastrar grupo');
+      throw Exception('Erro ao cadastrar repertório');
     }
   }
 
-  Future<void> deleteGruposMusicais(int idGrupo) async {
+  Future<void> deleteRepertorio(int cdRepertorie) async {
     try {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('token');
       print(token);
       final response = dio.delete(
-        'v1/music/genders/delete/$idGrupo',
+        'v1/music/repertoire/$cdRepertorie',
         options: Options(
           headers: {
             "authorization": 'Bearer $token',
@@ -45,16 +47,16 @@ class RepertoriosRepository {
       );
     } catch (e) {
       print(e.toString());
-      throw Exception('Erro ao apagar grupo');
+      throw Exception('Erro ao apagar repertório');
     }
   }
 
-  Future<List<GruposMusicaModel>> getGruposMusicaisPorId() async {
+  Future<List<RepertorioModel>> getRepertorioPorUserId(int userId) async {
     try {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('token');
-      final response = await dio.get(
-        'v1/music/genders/get',
+      final response = await dio.post(
+        'v1/music/repertoire/$userId',
         options: Options(
           headers: {
             "authorization": 'Bearer $token',
@@ -63,7 +65,7 @@ class RepertoriosRepository {
       );
 
       return (response.data as List)
-          .map((e) => GruposMusicaModel.fromMap(e))
+          .map((e) => RepertorioModel.fromMap(e))
           .toList();
    
     } on DioException catch (e) {

@@ -27,4 +27,15 @@ class ClassEstilosTextos {
   static final branccoSize18w400Montserrat = GoogleFonts.montserrat(
     fontSize: 18, fontWeight: FontWeight.w400, color: Colors.white
   );
+   static final pretoSize18w500OpenSans = GoogleFonts.openSans(
+    fontSize: 18, fontWeight: FontWeight.w500, color: Colors.black
+  );
+   static final pretoSize18w600OpenSans = GoogleFonts.openSans(
+    fontSize: 18, fontWeight: FontWeight.w600, color: Colors.black
+  );
+
+  static final brancoSize18w600OpenSans = GoogleFonts.openSans(
+    fontSize: 18, fontWeight: FontWeight.w600, color: Colors.white
+  );
+
 }

@@ -1,54 +1,62 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
+
 
 class MusicModel {
   int? cdMusic;
-  int? cdUser;
   String? nmMusic;
   String? singer;
-  String? nmGender;
+  String? letterMusic;
+  List<int>? cdBlockMusics;
+  int? cdUser;
   MusicModel({
     this.cdMusic,
-    this.cdUser,
     this.nmMusic,
     this.singer,
-    this.nmGender,
+    this.letterMusic,
+    this.cdBlockMusics,
+    this.cdUser,
   });
 
   MusicModel copyWith({
     int? cdMusic,
-    int? cdUser,
     String? nmMusic,
     String? singer,
-    String? nmGender,
+    String? letterMusic,
+    List<int>? cdBlockMusics,
+    int? cdUser,
   }) {
     return MusicModel(
       cdMusic: cdMusic ?? this.cdMusic,
-      cdUser: cdUser ?? this.cdUser,
       nmMusic: nmMusic ?? this.nmMusic,
       singer: singer ?? this.singer,
-      nmGender: nmGender ?? this.nmGender,
+      letterMusic: letterMusic ?? this.letterMusic,
+      cdBlockMusics: cdBlockMusics ?? this.cdBlockMusics,
+      cdUser: cdUser ?? this.cdUser,
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'cdMusic': cdMusic,
-      'cdUser': cdUser,
       'nmMusic': nmMusic,
       'singer': singer,
-      'nmGender': nmGender,
+      'letterMusic': letterMusic,
+      'cdBlockMusics': cdBlockMusics,
+      'cdUser': cdUser,
     };
   }
 
   factory MusicModel.fromMap(Map<String, dynamic> map) {
     return MusicModel(
       cdMusic: map['cdMusic'] != null ? map['cdMusic'] as int : null,
-      cdUser: map['cdUser'] != null ? map['cdUser'] as int : null,
       nmMusic: map['nmMusic'] != null ? map['nmMusic'] as String : null,
       singer: map['singer'] != null ? map['singer'] as String : null,
-      nmGender: map['nmGender'] != null ? map['nmGender'] as String : null,
+      letterMusic: map['letterMusic'] != null ? map['letterMusic'] as String : null,
+      cdBlockMusics: map['cdBlockMusics'] != null ? List<int>.from((map['cdBlockMusics'] as List<int>)) : null,
+      cdUser: map['cdUser'] != null ? map['cdUser'] as int : null,
     );
   }
 
@@ -58,7 +66,7 @@ class MusicModel {
 
   @override
   String toString() {
-    return 'MusicModel(cdMusic: $cdMusic, cdUser: $cdUser, nmMusic: $nmMusic, singer: $singer, nmGender: $nmGender)';
+    return 'MusicModel(cdMusic: $cdMusic, nmMusic: $nmMusic, singer: $singer, letterMusic: $letterMusic, cdBlockMusics: $cdBlockMusics, cdUser: $cdUser)';
   }
 
   @override
@@ -67,18 +75,20 @@ class MusicModel {
   
     return 
       other.cdMusic == cdMusic &&
-      other.cdUser == cdUser &&
       other.nmMusic == nmMusic &&
       other.singer == singer &&
-      other.nmGender == nmGender;
+      other.letterMusic == letterMusic &&
+      listEquals(other.cdBlockMusics, cdBlockMusics) &&
+      other.cdUser == cdUser;
   }
 
   @override
   int get hashCode {
     return cdMusic.hashCode ^
-      cdUser.hashCode ^
       nmMusic.hashCode ^
       singer.hashCode ^
-      nmGender.hashCode;
+      letterMusic.hashCode ^
+      cdBlockMusics.hashCode ^
+      cdUser.hashCode;
   }
 }

@@ -12,16 +12,16 @@ mixin _$RepertoriosController on RepertoriosControllerBase, Store {
   late final _$_lstRepertoriosAtom =
       Atom(name: 'RepertoriosControllerBase._lstRepertorios', context: context);
 
-  List<GruposMusicaModel> get lstRepertorios {
+  List<RepertorioModel> get lstRepertorios {
     _$_lstRepertoriosAtom.reportRead();
     return super._lstRepertorios;
   }
 
   @override
-  List<GruposMusicaModel> get _lstRepertorios => lstRepertorios;
+  List<RepertorioModel> get _lstRepertorios => lstRepertorios;
 
   @override
-  set _lstRepertorios(List<GruposMusicaModel> value) {
+  set _lstRepertorios(List<RepertorioModel> value) {
     _$_lstRepertoriosAtom.reportWrite(value, super._lstRepertorios, () {
       super._lstRepertorios = value;
     });
@@ -45,21 +45,19 @@ mixin _$RepertoriosController on RepertoriosControllerBase, Store {
     });
   }
 
-  late final _$_isCarregandoAtom =
-      Atom(name: 'RepertoriosControllerBase._isCarregando', context: context);
+  late final _$isCarregandoAtom =
+      Atom(name: 'RepertoriosControllerBase.isCarregando', context: context);
 
+  @override
   bool get isCarregando {
-    _$_isCarregandoAtom.reportRead();
-    return super._isCarregando;
+    _$isCarregandoAtom.reportRead();
+    return super.isCarregando;
   }
 
   @override
-  bool get _isCarregando => isCarregando;
-
-  @override
-  set _isCarregando(bool value) {
-    _$_isCarregandoAtom.reportWrite(value, super._isCarregando, () {
-      super._isCarregando = value;
+  set isCarregando(bool value) {
+    _$isCarregandoAtom.reportWrite(value, super.isCarregando, () {
+      super.isCarregando = value;
     });
   }
 
@@ -81,41 +79,41 @@ mixin _$RepertoriosController on RepertoriosControllerBase, Store {
     });
   }
 
-  late final _$setGruposMusicaisAsyncAction = AsyncAction(
-      'RepertoriosControllerBase.setGruposMusicais',
-      context: context);
+  late final _$setRepertorioAsyncAction =
+      AsyncAction('RepertoriosControllerBase.setRepertorio', context: context);
 
   @override
-  Future<void> setGruposMusicais() {
-    return _$setGruposMusicaisAsyncAction.run(() => super.setGruposMusicais());
+  Future<void> setRepertorio() {
+    return _$setRepertorioAsyncAction.run(() => super.setRepertorio());
   }
 
-  late final _$deleteGruposMusicaisAsyncAction = AsyncAction(
-      'RepertoriosControllerBase.deleteGruposMusicais',
+  late final _$getRepertorioPorUserIdAsyncAction = AsyncAction(
+      'RepertoriosControllerBase.getRepertorioPorUserId',
       context: context);
 
   @override
-  Future<void> deleteGruposMusicais() {
-    return _$deleteGruposMusicaisAsyncAction
-        .run(() => super.deleteGruposMusicais());
+  Future<void> getRepertorioPorUserId() {
+    return _$getRepertorioPorUserIdAsyncAction
+        .run(() => super.getRepertorioPorUserId());
   }
 
-  late final _$selecionarGrupoAsyncAction = AsyncAction(
-      'RepertoriosControllerBase.selecionarGrupo',
+  late final _$deleteRepertorioAsyncAction = AsyncAction(
+      'RepertoriosControllerBase.deleteRepertorio',
       context: context);
 
   @override
-  Future<void> selecionarGrupo(int index) {
-    return _$selecionarGrupoAsyncAction.run(() => super.selecionarGrupo(index));
+  Future<void> deleteRepertorio() {
+    return _$deleteRepertorioAsyncAction.run(() => super.deleteRepertorio());
   }
 
-  late final _$getGruposMusicaisAsyncAction = AsyncAction(
-      'RepertoriosControllerBase.getGruposMusicais',
+  late final _$selecionarRepertorioAsyncAction = AsyncAction(
+      'RepertoriosControllerBase.selecionarRepertorio',
       context: context);
 
   @override
-  Future<void> getGruposMusicais() {
-    return _$getGruposMusicaisAsyncAction.run(() => super.getGruposMusicais());
+  Future<void> selecionarRepertorio(int index) {
+    return _$selecionarRepertorioAsyncAction
+        .run(() => super.selecionarRepertorio(index));
   }
 
   late final _$RepertoriosControllerBaseActionController =
@@ -135,7 +133,7 @@ mixin _$RepertoriosController on RepertoriosControllerBase, Store {
   @override
   String toString() {
     return '''
-
+isCarregando: ${isCarregando}
     ''';
   }
 }

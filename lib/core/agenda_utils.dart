@@ -1,6 +1,8 @@
 // Copyright 2019 Aleksander Woźniak
 // SPDX-License-Identifier: Apache-2.0
 
+// ignore_for_file: prefer_for_elements_to_map_fromiterable
+
 import 'dart:collection';
 
 import 'package:table_calendar/table_calendar.dart';
@@ -29,8 +31,8 @@ final _kEventSource = Map.fromIterable(List.generate(50, (index) => index),
         item % 4 + 1, (index) => Event('Event $item | ${index + 1}')))
   ..addAll({
     kToday: [
-      Event('Today\'s Event 1'),
-      Event('Today\'s Event 2'),
+      const Event('Today\'s Event 1'),
+      const Event('Today\'s Event 2'),
     ],
   });
 

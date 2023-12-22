@@ -1,6 +1,9 @@
+// ignore_for_file: prefer_final_fields
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
-import 'package:music_app/repertorios/models/grupos_musica_model.dart';
+import 'package:music_app/repertorios/models/repertorio_model.dart';
 import 'package:music_app/repertorios/repositories/repertorios_repository.dart';
 import '../../core/session/session.dart' as session;
 part 'repertorios_controller.g.dart';
@@ -20,83 +23,46 @@ class RepertoriosController = RepertoriosControllerBase
 abstract class RepertoriosControllerBase with Store {
   final RepertoriosRepository _repertoriosRepository;
   RepertoriosControllerBase(this._repertoriosRepository);
-  final List<String> generosMusicais = [
-    'Variados',
-    'Rock',
-    'Pop',
-    'Hip Hop',
-    'Eletrônica',
-    'Jazz',
-    'Clássica',
-    'Sertanejo',
-    'Funk',
-    'Reggae',
-    'Blues',
-  ];
 
-  final nomeGrupoMusicalEC = TextEditingController();
+  final nomeRepertorioEC = TextEditingController();
   final idGrupoMusicalEC = TextEditingController();
 
   @readonly
-  var _lstRepertorios = <GruposMusicaModel>[];
+  var _lstRepertorios = <RepertorioModel>[];
 
   @readonly
   String _selectedGenre = 'Rock';
 
-  @readonly
-  bool _isCarregando = false;
+  @observable
+  bool isCarregando = false;
 
   String errorMessage = '';
-  
 
   @readonly
   var _status = RepertorioStateStatus.initial;
 
   @action
-  Future<void> setGruposMusicais() async {
+  Future<void> setRepertorio() async {
     try {
-      _status = RepertorioStateStatus.loaded;
-      await Future<void>.delayed(Duration.zero);
-      await _repertoriosRepository.setGruposMusicais(nomeGrupoMusicalEC.text, session.Session.userId);
+      _status = RepertorioStateStatus.loading;
       await Future.delayed(Duration.zero);
+      await _repertoriosRepository.setRepertorio(nomeRepertorioEC.text, session.Session.userId);
       _status = RepertorioStateStatus.updateScreen;
     } catch (e) {
       print(e.toString());
       _status = RepertorioStateStatus.error;
-      throw Exception('Erro ao cadastrar grupo');
+      throw Exception('Erro ao cadastrar repertório');
     }
   }
-
   @action
-  Future<void> deleteGruposMusicais() async {
+  Future<void> getRepertorioPorUserId() async {
     try {
-      _status = RepertorioStateStatus.loaded;
-      await Future<void>.delayed(Duration.zero);
-      await _repertoriosRepository.deleteGruposMusicais(int.tryParse(idGrupoMusicalEC.text)?? 0);
-      await Future.delayed(Duration.zero);
+      _status = RepertorioStateStatus.loading;
+       await Future.delayed(Duration.zero);
+      _lstRepertorios = await _repertoriosRepository.getRepertorioPorUserId(session.Session.userId);
+      print('${_lstRepertorios} ------------------------------------------------------------------------------------');
       _status = RepertorioStateStatus.updateScreen;
-    } catch (e) {
-      print(e.toString());
-      _status = RepertorioStateStatus.error;
-      throw Exception('Erro ao deletar grupo');
-    }
-  }
-
-
-  @action
-  Future<void> selecionarGrupo(int index) async{
-    nomeGrupoMusicalEC.text = _lstRepertorios[index].nmGender.toString(); 
-    idGrupoMusicalEC.text = _lstRepertorios[index].cdGender.toString();
-  }
-
-  @action
-  Future<void> getGruposMusicais() async {
-    try {
-      _status = RepertorioStateStatus.loaded;
-      await Future<void>.delayed(Duration.zero);
-      _lstRepertorios = await _repertoriosRepository.getGruposMusicaisPorId();
-      _status = RepertorioStateStatus.updateScreen;
-    } catch (e) {
+    } catch  (e) {
       if (_lstRepertorios.isEmpty) {
         _lstRepertorios = [];
       }
@@ -107,8 +73,30 @@ abstract class RepertoriosControllerBase with Store {
   }
 
   @action
+  Future<void> deleteRepertorio() async {
+    try {
+      _status = RepertorioStateStatus.loading;
+      await Future.delayed(Duration.zero);
+      await _repertoriosRepository.deleteRepertorio(int.tryParse(idGrupoMusicalEC.text)?? 0);
+      _status = RepertorioStateStatus.updateScreen;
+    } catch (e) {
+      print(e.toString());
+      _status = RepertorioStateStatus.error;
+      throw Exception('Erro ao deletar repertório');
+    }
+  }
+
+
+  @action
+  Future<void> selecionarRepertorio(int index) async{
+    nomeRepertorioEC.text = _lstRepertorios[index].nmRepertoire.toString(); 
+    idGrupoMusicalEC.text = _lstRepertorios[index].cdRepertoire.toString();
+  }
+
+
+  @action
   void limparCampos() {
-    nomeGrupoMusicalEC.clear();
+    nomeRepertorioEC.clear();
     idGrupoMusicalEC.clear();
   }
 }

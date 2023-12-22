@@ -16,7 +16,7 @@ final DioClient dio = DioClient();
       final token = prefs.getString('token');
       print(token);
       final response = dio.post(
-        'v1/music/musics/post',
+        'v1/music/musics',
         data: {
           'cdUser': cdUser,
           'nmMusic': nomeMusica,

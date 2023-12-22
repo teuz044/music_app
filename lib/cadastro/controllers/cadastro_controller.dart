@@ -37,6 +37,7 @@ abstract class CadastroControllerBase with Store {
       final int? statusCode = loginData?['statusCode'];
       print(token);
       _carregando = true;
+      await Future.delayed(Duration.zero);
       if (statusCode == 201) {
         // await prefs.setString('token', token);
         _carregando = false;

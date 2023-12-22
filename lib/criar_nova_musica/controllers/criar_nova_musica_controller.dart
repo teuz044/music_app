@@ -48,7 +48,7 @@ abstract class CriarNovaMusicaControllerBase with Store {
   @action
   Future<void> adicionarMusica(int cdGrupo) async {
     try {
-      _status = CriarMusicaStateStatus.loaded;
+      _status = CriarMusicaStateStatus.loading;
       await Future.delayed(Duration.zero);
       await criarNovaMusicaRepository.adicionarMusica(nomeMusicaEC.text, session.Session.userId, letraMusicaEC.text, cdGrupo);
       _status = CriarMusicaStateStatus.updateScreen;

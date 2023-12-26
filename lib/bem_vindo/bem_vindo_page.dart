@@ -92,13 +92,34 @@ class _BemVindoPageState extends State<BemVindoPage> {
                         borderRadius: BorderRadius.circular(7),
                       ),
                     ),
-                    icon: const Icon(Icons.music_note_outlined),
+                    icon: const Icon(Icons.my_library_music_outlined),
                     label: Text(
                       'Meu Repertório',
                       style: ClassEstilosTextos.branccoSize24w600Montserrat,
                     ),
                     onPressed: () {
                       Modular.to.navigate('repertorios');
+                    },
+                  ),
+                  const SizedBox(
+                    height: 64,
+                  ),
+                  ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      fixedSize: const Size(300, 50),
+                      backgroundColor: const Color(0xFF1C2120),
+                      elevation: 6,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(7),
+                      ),
+                    ),
+                    icon: const Icon(Icons.music_note_outlined),
+                    label: Text(
+                      'Minhas Músicas',
+                      style: ClassEstilosTextos.branccoSize24w600Montserrat,
+                    ),
+                    onPressed: () {
+                      Modular.to.pushNamed('minhas_musicas');
                     },
                   ),
                   const SizedBox(

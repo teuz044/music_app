@@ -4,6 +4,7 @@ import 'package:music_app/blocos_musicas/blocos_musicas_page.dart';
 import 'package:music_app/blocos_musicas/controllers/blocos_musicas_controller.dart';
 import 'package:music_app/blocos_musicas/repositories/blocos_musicais_repository.dart';
 
+import '../musicas_vinculadas_bloco_musical/musicas_vinculadas_bloco_module.dart';
 import '../repertorios/controllers/repertorios_controller.dart';
 class BlocosMusicasModule extends Module {
   
@@ -16,5 +17,6 @@ class BlocosMusicasModule extends Module {
   @override
   void routes(r) {
     r.child('/', child: (context) => BlocosMusicasPage(repertoriosController: Modular.get<RepertoriosController>(),));
+    r.module('/musicas_bloco_musical', module: MusicasVinculadasBlocoModule());
   }
 }

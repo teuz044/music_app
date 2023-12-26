@@ -1,24 +1,48 @@
+
 // ignore_for_file: unused_local_variable
 
 import 'package:dio/dio.dart';
-import 'package:music_app/core/dio/dio_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../models/bloco_musicas_model.dart';
+import '../../core/dio/dio_client.dart';
+import '../models/music_model.dart';
 
-class BlocosMusicaisRepository {
+class MinhasMusicasRepository {
   final DioClient dio = DioClient();
 
-  Future<void> setBlocoMusical(String nmBlockMusic, int cdUser, int cdRepertoire) async {
+  Future<void> deleteMusica(int idMusic) async {
     try {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('token');
+      print(token);
+      final response = dio.delete(
+        'v1/music/musics/delete/$idMusic',
+        options: Options(
+          headers: {
+            "authorization": 'Bearer $token',
+          },
+        ),
+      );
+    } catch (e) {
+      print(e.toString());
+      throw Exception('Erro ao apagar grupo');
+    }
+  }
+
+    Future<void> adicionarMusica(String nomeMusica, int cdUser,
+      String letraMusica, String compositor ) async {
+    try {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString('token');
+      print(token);
       final response = dio.post(
-        'v1/music/block_music',
+        'v1/music/musics',
         data: {
-          'nmBlockMusic': nmBlockMusic,
-          'cdRepertoire': cdRepertoire,
-          'cdUser': cdUser,
+          'nmMusic': nomeMusica,
+          'singer': compositor,
+          'letterMusic': letraMusica,
+
+          'cdUser': cdUser
         },
         options: Options(
           headers: {
@@ -28,49 +52,31 @@ class BlocosMusicaisRepository {
       );
     } catch (e) {
       print(e.toString());
-      throw Exception('Erro ao cadastrar repertório');
+      throw Exception('Erro ao cadastrar música');
     }
   }
 
-  Future<void> deleteBlocoMusical(int cdBlocoMusical) async {
-    try {
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      final token = prefs.getString('token');
-      print(token);
-      final response = dio.delete(
-        'v1/music/block_music/$cdBlocoMusical',
-        options: Options(
-          headers: {
-            "authorization": 'Bearer $token',
-          },
-        ),
-      );
-    } catch (e) {
-      print(e.toString());
-      throw Exception('Erro ao apagar repertório');
-    }
-  }
-
-  Future<List<BlocoMusicasModel>> getBlocoMusicalPorUserId(int userId) async {
+  Future<List<MusicModel>> getMusicasPorIdUser(int userId) async {
     try {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('token');
       final response = await dio.post(
-        'v1/music/block_music/$userId',
+        'v1/music/musics/$userId',
         options: Options(
           headers: {
             "authorization": 'Bearer $token',
           },
         ),
       );
+
       return (response.data as List)
-          .map((e) => BlocoMusicasModel.fromMap(e))
+          .map((e) => MusicModel.fromMap(e))
           .toList();
     } on DioException catch (e) {
       if (e.response!.statusCode == 404) {
         return [];
       }
-      return throw Exception('Erro ao buscar bloco musical');
+      return throw Exception('Erro ao buscar Musicas');
     }
   }
 }

@@ -1,6 +1,4 @@
 // ignore_for_file: prefer_final_fields
-
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:music_app/repertorios/models/repertorio_model.dart';

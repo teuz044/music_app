@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:music_app/blocos_musicas/controllers/blocos_musicas_controller.dart';
-import 'package:music_app/core/ui/custom_text_field.dart';
-import 'package:music_app/repertorios/controllers/repertorios_controller.dart';
-import '../core/ui/class_estilos_texto.dart';
-import '../core/loader/loader.dart';
+import 'package:music_app/core/loader/loader.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
-class BlocosMusicasPage extends StatefulWidget {
-  final RepertoriosController repertoriosController;
-  const BlocosMusicasPage({super.key, required this.repertoriosController});
+import '../core/ui/class_estilos_texto.dart';
+import '../core/ui/custom_text_field.dart';
+import 'controllers/musicas_vinculadas_bloco_controller.dart';
+
+class MusicasVinculadasBlocoPage extends StatefulWidget {
+  const MusicasVinculadasBlocoPage({super.key});
 
   @override
-  State<BlocosMusicasPage> createState() => _BlocosMusicasPageState();
+  State<MusicasVinculadasBlocoPage> createState() => _MusicasVinculadasBlocoPageState();
 }
 
-class _BlocosMusicasPageState extends State<BlocosMusicasPage> with Loader {
-  final controller = Modular.get<BlocosMusicasController>();
+class _MusicasVinculadasBlocoPageState extends State<MusicasVinculadasBlocoPage> with Loader {
+  final controller = Modular.get<MusicasVinculadasBlocoController>();
+  final blocosMusicasController = Modular.get<BlocosMusicasController>();
   late final ReactionDisposer statusReactionDisposer;
 
   @override
@@ -25,28 +26,26 @@ class _BlocosMusicasPageState extends State<BlocosMusicasPage> with Loader {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       statusReactionDisposer = reaction((_) => controller.status, (status) {
         switch (status) {
-          case BlocosMusicasStateStatus.initial:
+          case MinhasMusicasStateStatus.initial:
             Future.delayed(Duration.zero);
             break;
-          case BlocosMusicasStateStatus.loading:
+          case MinhasMusicasStateStatus.loading:
             showLoader();
             break;
-          case BlocosMusicasStateStatus.loaded:
+          case MinhasMusicasStateStatus.loaded:
             hideLoader();
             Future.delayed(Duration.zero);
             break;
-          case BlocosMusicasStateStatus.error:
+          case MinhasMusicasStateStatus.error:
             hideLoader();
             Future.delayed(Duration.zero);
             break;
-          case BlocosMusicasStateStatus.updateScreen:
+          case MinhasMusicasStateStatus.updateScreen:
             hideLoader();
             setState(() {});
             break;
         }
       });
-      await controller.getBlocoMusicalPorUserId(
-          widget.repertoriosController.idGrupoMusicalEC.text);
     });
     super.initState();
   }
@@ -79,7 +78,7 @@ class _BlocosMusicasPageState extends State<BlocosMusicasPage> with Loader {
                         size: 35,
                       )),
                   Text(
-                    'Blocos Musicais',
+                    'Minhas Musicas',
                     style: ClassEstilosTextos.pretoSize20w600Montserrat,
                   ),
                   Container(
@@ -148,7 +147,7 @@ class _BlocosMusicasPageState extends State<BlocosMusicasPage> with Loader {
                             return AlertDialog(
                               title: const Text('Criar Bloco Musical'),
                               content: CustomTextField(
-                                  controller: controller.nmBlockMusicEC,
+                                  controller: TextEditingController(),
                                   titulo: 'Nome do Bloco Musical'),
                               actions: <Widget>[
                                 TextButton(
@@ -157,10 +156,25 @@ class _BlocosMusicasPageState extends State<BlocosMusicasPage> with Loader {
                                   child: const Text('Cancelar'),
                                 ),
                                 TextButton(
-                                  onPressed: () async{
-                                    await controller.setBlocoMusical(int.tryParse(widget.repertoriosController.idGrupoMusicalEC.text) ?? 0);
-                                    await controller.getBlocoMusicalPorUserId(widget.repertoriosController.idGrupoMusicalEC.text);
-                                    await controller.getBlocoMusicalPorUserId(widget.repertoriosController.idGrupoMusicalEC.text).then((value) => Navigator.pop(context, 'Salvar'));
+                                  onPressed: () async {
+                                    // await controller.setBlocoMusical(
+                                    //     int.tryParse(widget
+                                    //             .repertoriosController
+                                    //             .idGrupoMusicalEC
+                                    //             .text) ??
+                                    //         0);
+                                    // await controller.getBlocoMusicalPorUserId(
+                                    //     widget.repertoriosController
+                                    //         .idGrupoMusicalEC.text);
+                                    // await controller
+                                    //     .getBlocoMusicalPorUserId(widget
+                                    //         .repertoriosController
+                                    //         .idGrupoMusicalEC
+                                    //         .text)
+                                    //     .then(
+                                    //       (value) =>
+                                    //           Navigator.pop(context, 'Salvar'),
+                                    //     );
                                   },
                                   child: const Text('Salvar'),
                                 ),
@@ -171,7 +185,7 @@ class _BlocosMusicasPageState extends State<BlocosMusicasPage> with Loader {
                       },
                       icon: const Icon(Icons.add),
                       label: Text(
-                        'Novo bloco',
+                        'Criar Música',
                         style: ClassEstilosTextos.brancoSize18w600OpenSans,
                       )),
                 )
@@ -181,42 +195,23 @@ class _BlocosMusicasPageState extends State<BlocosMusicasPage> with Loader {
               padding: const EdgeInsets.only(left: 8.0, right: 8),
               child: SizedBox(
                 height: 450,
-                child: controller.lstBlocosMusicaisFilterPorRepertorioId.isEmpty
+                child: controller.lstMusicasDoBlocoMusical.isEmpty
                     ? Container(
                         child: const Center(
-                            child: Text('Nenhum bloco cadastrado')))
+                            child: Text('Nenhuma música cadastrada')))
                     : ListView.builder(
                         shrinkWrap: true,
-                        itemCount: controller
-                            .lstBlocosMusicaisFilterPorRepertorioId.length,
+                        itemCount: controller.lstMusicasDoBlocoMusical.length,
                         itemBuilder: (context, index) {
                           return Card(
                             shape: const RoundedRectangleBorder(),
                             elevation: 2,
                             child: ListTile(
-                              onTap: () {
-                                controller.selecionarBlocoMusical(index);
-                                Modular.to.pushNamed('musicas_bloco_musical');
-                              },
                               title: Text(
-                                controller.lstBlocosMusicaisFilterPorRepertorioId[index].nmBlockMusic ??
-                                    '',
+                                '123',
                                 style:
                                     ClassEstilosTextos.pretoSize18w600OpenSans,
                               ),
-                              subtitle: Text(
-                                  'Quantidade de Músicas: ${controller.lstBlocosMusicaisFilterPorRepertorioId[index].cdMusics.length.toString()}'),
-                              trailing: IconButton(
-                                  onPressed: () async{
-                                    controller.selecionarBlocoMusical(index);
-                                    await controller.deleteBlocoMusical();
-                                    await controller.getBlocoMusicalPorUserId(widget.repertoriosController.idGrupoMusicalEC.text);
-                                    await controller.getBlocoMusicalPorUserId(widget.repertoriosController.idGrupoMusicalEC.text);
-                                  },
-                                  icon: const Icon(
-                                    Icons.delete,
-                                    color: Colors.red,
-                                  )),
                             ),
                           );
                         },

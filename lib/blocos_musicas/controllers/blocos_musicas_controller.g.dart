@@ -67,6 +67,16 @@ mixin _$BlocosMusicasController on BlocosMusicasControllerBase, Store {
     });
   }
 
+  late final _$getBlocoMusicalPorUserIdAsyncAction = AsyncAction(
+      'BlocosMusicasControllerBase.getBlocoMusicalPorUserId',
+      context: context);
+
+  @override
+  Future<void> getBlocoMusicalPorUserId(String cdRepertorie) {
+    return _$getBlocoMusicalPorUserIdAsyncAction
+        .run(() => super.getBlocoMusicalPorUserId(cdRepertorie));
+  }
+
   late final _$setBlocoMusicalAsyncAction = AsyncAction(
       'BlocosMusicasControllerBase.setBlocoMusical',
       context: context);
@@ -75,6 +85,31 @@ mixin _$BlocosMusicasController on BlocosMusicasControllerBase, Store {
   Future<void> setBlocoMusical(int repertorioId) {
     return _$setBlocoMusicalAsyncAction
         .run(() => super.setBlocoMusical(repertorioId));
+  }
+
+  late final _$deleteBlocoMusicalAsyncAction = AsyncAction(
+      'BlocosMusicasControllerBase.deleteBlocoMusical',
+      context: context);
+
+  @override
+  Future<void> deleteBlocoMusical() {
+    return _$deleteBlocoMusicalAsyncAction
+        .run(() => super.deleteBlocoMusical());
+  }
+
+  late final _$BlocosMusicasControllerBaseActionController =
+      ActionController(name: 'BlocosMusicasControllerBase', context: context);
+
+  @override
+  void selecionarBlocoMusical(int index) {
+    final _$actionInfo =
+        _$BlocosMusicasControllerBaseActionController.startAction(
+            name: 'BlocosMusicasControllerBase.selecionarBlocoMusical');
+    try {
+      return super.selecionarBlocoMusical(index);
+    } finally {
+      _$BlocosMusicasControllerBaseActionController.endAction(_$actionInfo);
+    }
   }
 
   @override

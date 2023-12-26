@@ -32,8 +32,9 @@ abstract class BlocosMusicasControllerBase with Store {
   String errorMessage = '';
 
   final nmBlockMusicEC = TextEditingController();
+  final cdBlockMusicEC = TextEditingController();
 
-
+  @action
   Future<void> getBlocoMusicalPorUserId(String cdRepertorie) async {
     try {
       _status = BlocosMusicasStateStatus.loading;
@@ -63,5 +64,25 @@ abstract class BlocosMusicasControllerBase with Store {
       _status = BlocosMusicasStateStatus.error;
       throw Exception('Erro ao cadastrar bloco');
     }
+  }
+
+  @action
+  Future<void> deleteBlocoMusical() async {
+    try {
+      _status = BlocosMusicasStateStatus.loading;
+      await Future.delayed(Duration.zero);
+      await _blocosMusicaisRepository.deleteBlocoMusical(int.tryParse(cdBlockMusicEC.text) ?? 0);
+      _status = BlocosMusicasStateStatus.updateScreen;
+    } catch (e) {
+      print(e.toString());
+      _status = BlocosMusicasStateStatus.error;
+      throw Exception('Erro ao apagar bloco');
+    }
+  }
+
+  @action
+  void selecionarBlocoMusical(int index) {
+    nmBlockMusicEC.text = _lstBlocosMusicaisFilterPorRepertorioId[index].nmBlockMusic ?? '';
+    cdBlockMusicEC.text = _lstBlocosMusicaisFilterPorRepertorioId[index].cdBlockMusic.toString();
   }
 }

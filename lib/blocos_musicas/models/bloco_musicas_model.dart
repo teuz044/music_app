@@ -1,10 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
-
-import 'package:music_app/criar_nova_musica/models/music_model.dart';
+import '../../minhas_musicas/models/music_model.dart';
 
 class BlocoMusicasModel {
   int? cdBlockMusic;

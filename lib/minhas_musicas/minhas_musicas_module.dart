@@ -3,6 +3,8 @@ import 'package:music_app/minhas_musicas/controllers/minhas_musicas_controller.d
 import 'package:music_app/minhas_musicas/minhas_musicas_page.dart';
 import 'package:music_app/minhas_musicas/repositories/minhas_musicas_repository.dart';
 
+import '../detalhes_musica_selecionada/detalhes_musica_module.dart';
+
 class MinhasMusicasModule extends Module {
   @override
   void binds(i) {
@@ -13,5 +15,6 @@ class MinhasMusicasModule extends Module {
   @override
   void routes(r) {
     r.child('/', child: (context) => const MinhasMusicasPage());
+    r.module('/detalhes_musica', module: DetalhesMusicaModule());
   }
 }

@@ -218,7 +218,10 @@ class _MinhasMusicasPageState extends State<MinhasMusicasPage> with Loader {
                           itemCount: controller.lstMusicas.length,
                           itemBuilder: (context, index) {
                             return ListTile(
-                              onTap: () {},
+                              onTap: () {
+                                controller.selecionarMusica(index);
+                                Modular.to.pushNamed('detalhes_musica');
+                              },
                               title: Text(
                                 controller.lstMusicas[index].nmMusic ?? '',
                                 style:

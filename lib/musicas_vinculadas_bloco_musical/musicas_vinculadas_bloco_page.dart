@@ -1,22 +1,24 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
 import 'package:music_app/blocos_musicas/controllers/blocos_musicas_controller.dart';
 import 'package:music_app/core/loader/loader.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-
 import '../core/ui/class_estilos_texto.dart';
-import '../core/ui/custom_text_field.dart';
 import 'controllers/musicas_vinculadas_bloco_controller.dart';
 
 class MusicasVinculadasBlocoPage extends StatefulWidget {
   const MusicasVinculadasBlocoPage({super.key});
 
   @override
-  State<MusicasVinculadasBlocoPage> createState() => _MusicasVinculadasBlocoPageState();
+  State<MusicasVinculadasBlocoPage> createState() =>
+      _MusicasVinculadasBlocoPageState();
 }
 
-class _MusicasVinculadasBlocoPageState extends State<MusicasVinculadasBlocoPage> with Loader {
+class _MusicasVinculadasBlocoPageState extends State<MusicasVinculadasBlocoPage>
+    with Loader {
   final controller = Modular.get<MusicasVinculadasBlocoController>();
   final blocosMusicasController = Modular.get<BlocosMusicasController>();
   late final ReactionDisposer statusReactionDisposer;
@@ -145,47 +147,31 @@ class _MusicasVinculadasBlocoPageState extends State<MusicasVinculadasBlocoPage>
                           context: context,
                           builder: (context) {
                             return AlertDialog(
-                              title: const Text('Criar Bloco Musical'),
-                              content: CustomTextField(
-                                  controller: TextEditingController(),
-                                  titulo: 'Nome do Bloco Musical'),
-                              actions: <Widget>[
-                                TextButton(
-                                  onPressed: () =>
-                                      Navigator.pop(context, 'Cancelar'),
-                                  child: const Text('Cancelar'),
-                                ),
-                                TextButton(
-                                  onPressed: () async {
-                                    // await controller.setBlocoMusical(
-                                    //     int.tryParse(widget
-                                    //             .repertoriosController
-                                    //             .idGrupoMusicalEC
-                                    //             .text) ??
-                                    //         0);
-                                    // await controller.getBlocoMusicalPorUserId(
-                                    //     widget.repertoriosController
-                                    //         .idGrupoMusicalEC.text);
-                                    // await controller
-                                    //     .getBlocoMusicalPorUserId(widget
-                                    //         .repertoriosController
-                                    //         .idGrupoMusicalEC
-                                    //         .text)
-                                    //     .then(
-                                    //       (value) =>
-                                    //           Navigator.pop(context, 'Salvar'),
-                                    //     );
+                              title: const Text('Lista de Músicas'),
+                              content: SizedBox(
+                                width: double.maxFinite,
+                                height: 300, // Ajuste a altura conforme necessário
+                                child: ListView.builder(
+                                  itemCount: 4,
+                                  itemBuilder: (context, index) {
+                                    return Card(
+                                      child: ListTile(
+                                        trailing: IconButton(onPressed: () {
+                                          
+                                        }, icon: Icon(Icons.new_label_outlined, color: Colors.green,)),
+                                        title: Text('TESTE 1'),
+                                      ),
+                                    );
                                   },
-                                  child: const Text('Salvar'),
                                 ),
-                              ],
+                              ),
                             );
                           },
                         );
                       },
-                      icon: const Icon(Icons.add),
+                      icon: const Icon(Icons.library_music_outlined),
                       label: Text(
-                        'Criar Música',
+                        'Vincular Música',
                         style: ClassEstilosTextos.brancoSize18w600OpenSans,
                       )),
                 )

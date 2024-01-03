@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 
 import '../models/minhas_musicas_model.dart';

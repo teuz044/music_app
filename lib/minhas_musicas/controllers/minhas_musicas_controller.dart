@@ -44,7 +44,6 @@ final formKey = GlobalKey<FormState>();
       if (_lstMusicas.isEmpty) {
         _lstMusicas = [];
       }
-      print(e.toString());
       _status = MinhasMusicasStateStatus.error;
       throw Exception('Erro ao buscar musicas');
     }
@@ -58,7 +57,6 @@ final formKey = GlobalKey<FormState>();
       await _minhasMusicasRepository.adicionarMusica(nomeMusicaEC.text, session.Session.userId, letraMusicaEC.text, compositorEC.text);
       _status = MinhasMusicasStateStatus.updateScreen;
     } catch (e) {
-      print(e.toString());
       _status = MinhasMusicasStateStatus.error;
       throw Exception('Erro ao cadastrar música');
     }
@@ -80,7 +78,6 @@ final formKey = GlobalKey<FormState>();
       await _minhasMusicasRepository.deleteMusica(int.tryParse(cdMusicEC.text) ?? 0);
       _status = MinhasMusicasStateStatus.updateScreen;
     } catch (e) {
-      print(e.toString());
       _status = MinhasMusicasStateStatus.error;
       throw Exception('Erro ao apagar música');
     }

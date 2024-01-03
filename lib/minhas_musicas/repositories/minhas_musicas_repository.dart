@@ -14,7 +14,6 @@ class MinhasMusicasRepository {
     try {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('token');
-      print(token);
       final response = dio.delete(
         'v1/music/musics/delete/$idMusic',
         options: Options(
@@ -24,7 +23,6 @@ class MinhasMusicasRepository {
         ),
       );
     } catch (e) {
-      print(e.toString());
       throw Exception('Erro ao apagar grupo');
     }
   }
@@ -34,7 +32,6 @@ class MinhasMusicasRepository {
     try {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('token');
-      print(token);
       final response = dio.post(
         'v1/music/musics',
         data: {
@@ -51,7 +48,6 @@ class MinhasMusicasRepository {
         ),
       );
     } catch (e) {
-      print(e.toString());
       throw Exception('Erro ao cadastrar música');
     }
   }

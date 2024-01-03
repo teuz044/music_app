@@ -1,4 +1,6 @@
 
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:music_app/blocos_musicas/blocos_musicas_page.dart';
 import 'package:music_app/blocos_musicas/controllers/blocos_musicas_controller.dart';

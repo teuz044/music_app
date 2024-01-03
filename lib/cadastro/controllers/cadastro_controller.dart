@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:music_app/cadastro/models/cadastro_model.dart';
@@ -35,7 +37,6 @@ abstract class CadastroControllerBase with Store {
       // final SharedPreferences prefs = await SharedPreferences.getInstance();
       final String? token = loginData?['token'];
       final int? statusCode = loginData?['statusCode'];
-      print(token);
       _carregando = true;
       await Future.delayed(Duration.zero);
       if (statusCode == 201) {
@@ -48,7 +49,6 @@ abstract class CadastroControllerBase with Store {
         return false;
       }
     } catch (e) {
-      print(e.toString());
       _carregando = false;
       throw Exception('Registro falhou');
     }

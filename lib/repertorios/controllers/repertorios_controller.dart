@@ -47,7 +47,6 @@ abstract class RepertoriosControllerBase with Store {
       await _repertoriosRepository.setRepertorio(nomeRepertorioEC.text, session.Session.userId);
       _status = RepertorioStateStatus.updateScreen;
     } catch (e) {
-      print(e.toString());
       _status = RepertorioStateStatus.error;
       throw Exception('Erro ao cadastrar repertório');
     }
@@ -58,13 +57,11 @@ abstract class RepertoriosControllerBase with Store {
       _status = RepertorioStateStatus.loading;
        await Future.delayed(Duration.zero);
       _lstRepertorios = await _repertoriosRepository.getRepertorioPorUserId(session.Session.userId);
-      print('${_lstRepertorios} ------------------------------------------------------------------------------------');
       _status = RepertorioStateStatus.updateScreen;
     } catch  (e) {
       if (_lstRepertorios.isEmpty) {
         _lstRepertorios = [];
       }
-      print(e.toString());
        _status = RepertorioStateStatus.error;
       throw Exception('Erro ao buscar grupo');
     }
@@ -78,7 +75,6 @@ abstract class RepertoriosControllerBase with Store {
       await _repertoriosRepository.deleteRepertorio(int.tryParse(idGrupoMusicalEC.text)?? 0);
       _status = RepertorioStateStatus.updateScreen;
     } catch (e) {
-      print(e.toString());
       _status = RepertorioStateStatus.error;
       throw Exception('Erro ao deletar repertório');
     }

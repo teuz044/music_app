@@ -44,5 +44,6 @@ class CadastroRepository {
     } catch (e) {
       return null; // Retorne null em caso de exceção
     }
+    return null;
   }
 }

@@ -263,32 +263,7 @@ class _RepertorioPageState extends State<RepertorioPage> with Loader {
                             },
                           ),
                   ),
-                  Expanded(
-                    child: Align(
-                      alignment: Alignment.bottomCenter,
-                      child: ElevatedButton.icon(
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8)),
-                            fixedSize: const Size.fromHeight(60),
-                          ),
-                          onPressed: () {
-                            Modular.to.navigate('adicionar_musica');
-                          },
-                          icon: const Icon(
-                            Icons.add_box_outlined,
-                            size: 30,
-                          ),
-                          label: Text(
-                            'Adicionar novas músicas',
-                            style:
-                                ClassEstilosTextos.branccoSize18w600Montserrat,
-                          )),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 24,
-                  ),
+                 
                 ],
               );
       }),

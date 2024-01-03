@@ -8,7 +8,8 @@ import 'package:music_app/login/login_module.dart';
 
 void main() {
   configLoading();
-  return runApp(ModularApp(module: AppModule(), child: AppWidget()));
+  return runApp(
+    ModularApp(module: AppModule(), child: AppWidget()));
 }
 
 class AppModule extends Module {
@@ -52,6 +53,7 @@ class AppWidget extends StatelessWidget {
     return MaterialApp.router(
       title: 'My Smart App',
       theme: ThemeData(primarySwatch: Colors.blue),
+      debugShowCheckedModeBanner: false,
       routerConfig: Modular.routerConfig,
     ); //added by extension
   }

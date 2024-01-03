@@ -46,7 +46,6 @@ abstract class BlocosMusicasControllerBase with Store {
       if (_lstBlocosMusicais.isEmpty) {
         _lstBlocosMusicais = [];
       }
-      print(e.toString());
       _status = BlocosMusicasStateStatus.error;
       throw Exception('Erro ao buscar repertório');
     }
@@ -60,7 +59,6 @@ abstract class BlocosMusicasControllerBase with Store {
       await _blocosMusicaisRepository.setBlocoMusical(nmBlockMusicEC.text, session.Session.userId, repertorioId);
       _status = BlocosMusicasStateStatus.updateScreen;
     } catch (e) {
-      print(e.toString());
       _status = BlocosMusicasStateStatus.error;
       throw Exception('Erro ao cadastrar bloco');
     }
@@ -74,7 +72,6 @@ abstract class BlocosMusicasControllerBase with Store {
       await _blocosMusicaisRepository.deleteBlocoMusical(int.tryParse(cdBlockMusicEC.text) ?? 0);
       _status = BlocosMusicasStateStatus.updateScreen;
     } catch (e) {
-      print(e.toString());
       _status = BlocosMusicasStateStatus.error;
       throw Exception('Erro ao apagar bloco');
     }

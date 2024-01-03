@@ -27,7 +27,6 @@ class BlocosMusicaisRepository {
         ),
       );
     } catch (e) {
-      print(e.toString());
       throw Exception('Erro ao cadastrar repertório');
     }
   }
@@ -36,7 +35,6 @@ class BlocosMusicaisRepository {
     try {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('token');
-      print(token);
       final response = dio.delete(
         'v1/music/block_music/$cdBlocoMusical',
         options: Options(
@@ -46,7 +44,6 @@ class BlocosMusicaisRepository {
         ),
       );
     } catch (e) {
-      print(e.toString());
       throw Exception('Erro ao apagar repertório');
     }
   }

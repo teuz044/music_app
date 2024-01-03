@@ -13,7 +13,6 @@ class RepertoriosRepository {
     try {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('token');
-      print(token);
       final response = dio.post(
         '/v1/music/repertoire',
         data: {
@@ -27,7 +26,6 @@ class RepertoriosRepository {
         ),
       );
     } catch (e) {
-      print(e.toString());
       throw Exception('Erro ao cadastrar repertório');
     }
   }
@@ -36,7 +34,6 @@ class RepertoriosRepository {
     try {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('token');
-      print(token);
       final response = dio.delete(
         'v1/music/repertoire/$cdRepertorie',
         options: Options(
@@ -46,7 +43,6 @@ class RepertoriosRepository {
         ),
       );
     } catch (e) {
-      print(e.toString());
       throw Exception('Erro ao apagar repertório');
     }
   }

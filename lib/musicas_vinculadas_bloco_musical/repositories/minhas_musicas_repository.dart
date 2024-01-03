@@ -1,4 +1,6 @@
 
+// ignore_for_file: unused_local_variable
+
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -25,7 +27,6 @@ class MinhasMusicasRepository {
         ),
       );
     } catch (e) {
-      print(e.toString());
       throw Exception('Erro ao cadastrar repertório');
     }
   }
@@ -34,7 +35,6 @@ class MinhasMusicasRepository {
     try {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('token');
-      print(token);
       final response = dio.delete(
         'v1/music/block_music/$cdBlocoMusical',
         options: Options(
@@ -44,7 +44,6 @@ class MinhasMusicasRepository {
         ),
       );
     } catch (e) {
-      print(e.toString());
       throw Exception('Erro ao apagar repertório');
     }
   }
